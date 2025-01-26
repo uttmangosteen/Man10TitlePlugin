@@ -1,6 +1,5 @@
 package io.github.uttmangosteen.man10TitlePlugin;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
