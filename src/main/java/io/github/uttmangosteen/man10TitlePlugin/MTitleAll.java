@@ -1,39 +1,56 @@
 package io.github.uttmangosteen.man10TitlePlugin;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 public class MTitleAll implements CommandExecutor {
+    private final JavaPlugin plugin;
+
+    public MTitleAll(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String alias, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
         if (!(sender.hasPermission("red.man10.mtitle"))) return true;
-        String title, subtitle = "";
+        if (args.length == 0) return false;
+        StringBuilder title = new StringBuilder();
+        StringBuilder subtitle = new StringBuilder();
         int stay = 5, fadeOut = 2;
-        switch (args.length) {
-            case 4:
-                try {
-                    fadeOut = Integer.parseInt(args[3]);
-                } catch (NumberFormatException ignored) {}
-            case 3:
-                try {
-                    stay = Integer.parseInt(args[2]);
-                } catch (NumberFormatException ignored) {}
-            case 2:
-                subtitle = Objects.equals(args[1], "-") ? "" : args[1].replace('&', '§');
-            case 1:
-                title = Objects.equals(args[0], "-") ? "" : args[0].replace('&', '§');
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendTitle(title, subtitle, 0, stay * 20, fadeOut * 20);
-                    p.playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1, 1);
-                }
-                return true;
+        for (int i = 0, j = 0; i < args.length; i++) {
+            if (args[i].equals("|")) {j++;continue;}
+            args[i] = args[i].replace("&", "§");
+            args[i] = args[i].replace("#", " ");
+            switch (j) {
+                case 0: title.append(args[i]);continue;
+                case 1: subtitle.append(args[i]);continue;
+                case 2:
+                    try {stay = Integer.parseInt(args[i]);} catch (NumberFormatException ignored) {}continue;
+                case 3:
+                    try {fadeOut = Integer.parseInt(args[i]);} catch (NumberFormatException ignored) {}
+            }
         }
-        return false;
+
+        try {
+            ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+            DataOutputStream out = new DataOutputStream(byteArray);
+            out.writeUTF("MTitleAll");
+            out.writeUTF(title.toString());
+            out.writeUTF(subtitle.toString());
+            out.writeInt(stay);
+            out.writeInt(fadeOut);
+
+            Player player = (Player) sender;
+            player.sendPluginMessage(plugin, "BungeeCord", byteArray.toByteArray());
+        } catch (IOException e) {e.printStackTrace();}
+        return true;
     }
 }
