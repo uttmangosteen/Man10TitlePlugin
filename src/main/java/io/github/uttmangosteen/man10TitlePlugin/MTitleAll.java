@@ -24,7 +24,7 @@ public class MTitleAll implements CommandExecutor {
         if (args.length == 0) return false;
         StringBuilder title = new StringBuilder();
         StringBuilder subtitle = new StringBuilder();
-        int stay = 5, fadeOut = 2;
+        int stay = 5, fadeIn = 1, fadeOut = 1;
         for (int i = 0, j = 0; i < args.length; i++) {
             if (args[i].equals("|")) {j++;continue;}
             args[i] = args[i].replace("&", "§");
@@ -33,8 +33,12 @@ public class MTitleAll implements CommandExecutor {
                 case 0: title.append(args[i]);continue;
                 case 1: subtitle.append(args[i]);continue;
                 case 2:
-                    try {stay = Integer.parseInt(args[i]);} catch (NumberFormatException ignored) {}continue;
+                    try {stay = Integer.parseInt(args[i]);} catch (NumberFormatException ignored) {}
+                    continue;
                 case 3:
+                    try {fadeIn = Integer.parseInt(args[i]);} catch (NumberFormatException ignored) {}
+                    continue;
+                case 4:
                     try {fadeOut = Integer.parseInt(args[i]);} catch (NumberFormatException ignored) {}
             }
         }
@@ -46,6 +50,7 @@ public class MTitleAll implements CommandExecutor {
             out.writeUTF(title.toString());
             out.writeUTF(subtitle.toString());
             out.writeInt(stay);
+            out.writeInt(fadeIn);
             out.writeInt(fadeOut);
 
             Player player = (Player) sender;

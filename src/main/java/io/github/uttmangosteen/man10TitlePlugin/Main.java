@@ -13,4 +13,9 @@ public final class Main extends JavaPlugin {
         Objects.requireNonNull(getCommand("mtitle_all")).setExecutor(new MTitleAll(this));
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
+
+    @Override
+    public void onDisable() {
+    }
+
 }
