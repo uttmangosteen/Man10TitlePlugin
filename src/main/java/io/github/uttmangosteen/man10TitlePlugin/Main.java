@@ -23,6 +23,7 @@ public class Main extends JavaPlugin implements PluginMessageListener {
         getServer().getMessenger().registerIncomingPluginChannel(this, "mtitle:channel", this);
     }
 
+    //bungeeから送られた情報をもとにTitle表示
     @Override
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte[] message) {
         if (!channel.equals("mtitle:channel")) return;
