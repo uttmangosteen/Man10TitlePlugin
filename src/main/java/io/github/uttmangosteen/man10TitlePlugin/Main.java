@@ -17,30 +17,25 @@ public class Main extends JavaPlugin implements PluginMessageListener {
         Objects.requireNonNull(getCommand("mtitle")).setExecutor(new MTitle(this));
         Objects.requireNonNull(getCommand("mtitle_test")).setExecutor(new MTitle(this));
         Objects.requireNonNull(getCommand("mtitle_all")).setExecutor(new MTitle(this));
-        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-    }
-    @Override
-    public void onDisable() {
-        this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
-        this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
+
+        if (!getServer().getPluginManager().isPluginEnabled(this)) return;
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "mtitle:channel");
+        getServer().getMessenger().registerIncomingPluginChannel(this, "mtitle:channel", this);
     }
 
     @Override
     public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte[] message) {
-        if (!channel.equals("BungeeCord")) return;
-
+        if (!channel.equals("mtitle:channel")) return;
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         String subChannel = in.readUTF();
-
-        if (subChannel.equals("MTitle")) {
+        if (subChannel.equalsIgnoreCase("MTitle")) {
             String title = in.readUTF();
-            String subtitle = in.readUTF();
-            int stayTime = in.readInt();
-            int fadeInTime = in.readInt();
-            int fadeOutTime = in.readInt();
-
+            String subTitle = in.readUTF();
+            int stay = in.readInt();
+            int fadeIn = in.readInt();
+            int fadeOut = in.readInt();
             for (Player p : Bukkit.getOnlinePlayers()) {
-                p.sendTitle(title, subtitle, fadeInTime, stayTime, fadeOutTime);
+                p.sendTitle(title, subTitle, fadeIn, stay, fadeOut);
                 p.playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1, 1);
             }
         }
