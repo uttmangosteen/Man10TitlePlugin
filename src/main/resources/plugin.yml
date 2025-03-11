@@ -5,7 +5,7 @@ main: io.github.uttmangosteen.man10TitlePlugin.Main
 commands:
   mtitle:
     usage: "§d=== Man10TitlePlugin help ===\n
-            §d/<mtitle|mtitle_test|mtitle_all> [title] | [subTitle] | [stay(sec)] | [fadeIn(sec)] | [fadeOut(sec)]\n
+            §d/<mtitle|mtitle_test|mtitle_all> [title] | [subTitle] | [stay(s)] | [fadeIn(s)] | [fadeOut(s)]\n
             §dmtitle...鯖内, mtitle_test...自分のみ, mtitle_all...全鯖\n
             §dデフォルト stay...5, fadeIn...1, fadeOut...1\n
             §d&でカラコ#でスペース使えます\n
@@ -13,7 +13,7 @@ commands:
     permission: red.man10.mtitle
   mtitle_test:
     usage: "§d=== Man10TitlePlugin help ===\n
-            §d/<mtitle|mtitle_test|mtitle_all> [title] | [subTitle] | [stay(sec)] | [fadeIn(sec)] | [fadeOut(sec)]\n
+            §d/<mtitle|mtitle_test|mtitle_all> [title] | [subTitle] | [stay(s)] | [fadeIn(s)] | [fadeOut(s)]\n
             §dmtitle...鯖内, mtitle_test...自分のみ, mtitle_all...全鯖\n
             §dデフォルト stay...5, fadeIn...1, fadeOut...1\n
             §d&でカラコ#でスペース使えます\n
@@ -21,7 +21,7 @@ commands:
     permission: red.man10.mtitle
   mtitle_all:
     usage: "§d=== Man10TitlePlugin help ===\n
-            §d/<mtitle|mtitle_test|mtitle_all> [title] | [subTitle] | [stay(sec)] | [fadeIn(sec)] | [fadeOut(sec)]\n
+            §d/<mtitle|mtitle_test|mtitle_all> [title] | [subTitle] | [stay(s)] | [fadeIn(s)] | [fadeOut(s)]\n
             §dmtitle...鯖内, mtitle_test...自分のみ, mtitle_all...全鯖\n
             §dデフォルト stay...5, fadeIn...1, fadeOut...1\n
             §d&でカラコ#でスペース使えます\n

@@ -43,7 +43,20 @@ public class MTitle implements CommandExecutor {
             p.sendTitle(title.toString(), subtitle.toString(), fadeIn * 20, stay * 20, fadeOut * 20);
             p.playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1, 1);
         } else if (Objects.equals(alias, "mtitle_all")) {
-
+            String titleMessage = title.toString();
+            String subtitleMessage = subtitle.toString();
+            int stayTime = stay * 20;  // ミリ秒からティックに変換
+            int fadeInTime = fadeIn * 20;
+            int fadeOutTime = fadeOut * 20;
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("MTitle");
+            out.writeUTF(titleMessage);
+            out.writeUTF(subtitleMessage);
+            out.writeInt(stayTime);
+            out.writeInt(fadeInTime);
+            out.writeInt(fadeOutTime);
+            Player p = (Player) sender;
+            p.sendPluginMessage(plugin, "BungeeCord", out.toByteArray());
         } else {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendTitle(title.toString(), subtitle.toString(), fadeIn * 20, stay * 20, fadeOut * 20);
