@@ -1,6 +1,7 @@
 name: Man10TitlePlugin
 version: '1.0-SNAPSHOT'
 main: io.github.uttmangosteen.man10TitlePlugin.Main
+api-version: 1.20
 
 commands:
   mtitle:
