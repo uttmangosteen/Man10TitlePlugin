@@ -51,6 +51,8 @@ public class MTitle implements CommandExecutor {
             p.playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1, 1);
 
         } else if (Objects.equals(alias, "mtitle_all")) {
+            //bungeeにpluginMessageを送る際、playerが鯖に一人いなければならない
+            //調べた感じbungee仕様上仕方なさそう
             Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player == null) {
                 Bukkit.getConsoleSender().sendMessage("§cmtitle_allは失敗した");
